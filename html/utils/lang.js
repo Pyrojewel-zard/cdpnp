@@ -6,15 +6,16 @@
 
 import { trans_zh_hk }  from './trans/zh_hk.js'
 import { trans_zh_cn }  from './trans/zh_cn.js'
+import {default_language} from './trans/en_us.js'
 //import { trans_ja }     from './trans/ja.js'
 //import { trans_ko }     from './trans/ko.js'
 //import { trans_de }     from './trans/de.js'
 
 let trans = null;
 if (navigator.language.startsWith('zh')) {
-    trans = trans_zh_hk;
+    trans = default_language;
     if (navigator.language.includes('CN'))
-        trans = trans_zh_cn;
+        trans = default_language;
 }
 //if (navigator.language.includes('ja')) // Japanese
 //    trans = trans_ja;

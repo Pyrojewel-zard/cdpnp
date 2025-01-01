@@ -23,7 +23,7 @@ from cd_ws import CDWebSocket, CDWebSocketNS
 from web_serve import ws_ns, start_web
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'pycdnet'))
-sys.path.append(os.path.join(os.path.dirname(__file__), 'cdnet'))
+# 这句并没有表现出该有的用处诶
 
 from cdnet.utils.log import *
 from cdnet.utils.cd_args import CdArgs
@@ -33,10 +33,11 @@ from cdnet.dispatch import *
 from pnp_cv import pnp_cv_start, cv_dat, cur_path
 from pnp_xyz import *
 
+#cdArgs是一个命令行解析库，获取命令行参数来判断执行的类型
 args = CdArgs()
 #dev_str = args.get("--dev", dft="ttyACM0")
 dev_str = args.get("--dev", dft="0483:5740")
-
+# 
 if args.get("--help", "-h") != None:
     print(__doc__)
     exit()
@@ -54,7 +55,7 @@ logger = logging.getLogger(f'cdpnp')
 # baudrate ignored for cdbus bridge
 dev = CDBusSerial(dev_str) if dev_str != 'None' else None
 if dev:
-    CDNetIntf(dev, mac=0x00)
+    cdnetIntf(dev, mac=0x00)
     xyz_init()
 
 print('start...')
@@ -63,6 +64,8 @@ print('start...')
 coeff = None
 fiducial_pcb = [ [0, 0], [1, 1] ]
 fiducial_cam = [ [0, 0], [10, 10] ]
+
+
 
 def equations(p):
     s, a, d_x, d_y = p
@@ -104,17 +107,6 @@ async def dev_service():
             if dev:
                 goto_pos(dat['pos'], dat['wait'], dat['speed'])
             await sock.sendto('succeeded', src)
-        
-        elif dat['action'] == 'get_pump_hw_ver':
-            logger.info(f"get_pump_hw_ver: {xyz['pump_hw_ver']}")
-            await sock.sendto(xyz['pump_hw_ver'], src)
-        
-        elif dat['action'] == 'get_pump_pressure':
-            logger.info(f"get_pump_pressure")
-            pressure = 0.0
-            if dev:
-                pressure = get_pump_pressure()
-            await sock.sendto(pressure, src)
         
         elif dat['action'] == 'set_pump':
             logger.info(f"set_pump {dat['val']}")
