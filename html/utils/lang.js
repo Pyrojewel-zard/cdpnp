@@ -24,6 +24,7 @@ if (navigator.language.startsWith('zh')) {
 //if (navigator.language.includes('de')) // German
 //    trans = trans_de;
 
+
 function L(ori, mark=null) {
     if (trans == null)
         return ori;
