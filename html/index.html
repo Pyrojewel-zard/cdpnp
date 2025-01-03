@@ -164,6 +164,20 @@
             <input type="text" id="fiducial_pcb0" onchange="input_change()">
             <input type="text" id="fiducial_pcb1" onchange="input_change()">
         </div>
+        <div id="input_finetune">
+            <div id="finetune_grp0">
+                <span style="display: inline-block; min-width: 138px;">${L('POS FineTune1')}:</span>
+                <input type="text" id="fine_tune_pos1" onchange="input_change()">
+                <button class="button is-small goto_btn" onclick="btn_goto_xy('fine_tune_pos1')">${L('Goto')}</button>
+                <button class="button is-small" onclick="btn_update_xy('fine_tune_pos1')">${L('Update')}</button>
+            </div>
+            <div id="finetune_grp1">
+                <span style="display: inline-block; min-width: 138px;">${L('POS FineTune2')}:</span>
+                <input type="text" id="fine_tune_pos2" onchange="input_change()">
+                <button class="button is-small goto_btn" onclick="btn_goto_xy('fine_tune_pos2')">${L('Goto')}</button>
+                <button class="button is-small" onclick="btn_update_xy('fine_tune_pos2')">${L('Update')}</button>
+             </div>
+        </div>
         <div id="input_user"></div>
     </div>
 

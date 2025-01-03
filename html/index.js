@@ -50,7 +50,8 @@ let csa_dft = {
     pld_tgt_grid: [2.0, 2.0],
     pld_rotate: 0,
     pld_enable: 0,
-    
+    fine_tune_pos1: [0, 0],
+    fine_tune_pos2: [0, 0],
     pump_hw_ver: null,
     pump_suck_on: false
 };
@@ -62,7 +63,7 @@ let csa_need_save = ['grab_ofs', 'nozzle_cali', 'cam_angle', 'comp_search', 'cam
                      'user_pos', 'motor_speed', 'nozzle_expos', 'nozzle_thresh',
                      'offset_config', 'pld_search', 'pld_base_z', 'pld_comp_offset', 'pld_comp_space', 'pld_start_at', 'pld_tgt_grid', 'pld_rotate', 'pld_enable'];
 let csa_prj_export = ['pcb_base_z', 'fiducial_pcb', 'fiducial_cam', 'offset_config'];
-let csa_cfg_export = ['grab_ofs', 'nozzle_cali', 'cam_angle', 'comp_search', 'cam_dz', 'comp_base_z', 'pcb_base_z', 'user_pos'];
+let csa_cfg_export = ['grab_ofs', 'nozzle_cali', 'cam_angle', 'comp_search', 'cam_dz', 'comp_base_z', 'pcb_base_z', 'user_pos', 'fine_tune_pos1', 'fine_tune_pos2'];
 
 let db = null;
 let ws_ns = new CDWebSocketNS('/');

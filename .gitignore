@@ -16,6 +16,8 @@
 /dist/
 /tmp/
 .history/
+cdpnp文件解析_主要是html和js的部分.html
+cdpnp文件解析_主要是html和js的部分_files/
 #
 # git files that we don't want to ignore even it they are dot-files
 #

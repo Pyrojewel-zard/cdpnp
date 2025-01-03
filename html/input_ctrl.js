@@ -72,6 +72,9 @@ function csa_to_page_input()
     document.getElementById('cam1_angle').value = `${readable_float(csa.cam_angle[0])}`;
     document.getElementById('cam2_angle').value = `${readable_float(csa.cam_angle[1])}`;
     
+    // Fine Tune by Pyrojewel
+    document.getElementById('fine_tune_pos1').value = `${readable_float(csa.fine_tune_pos1[0])}, ${readable_float(csa.fine_tune_pos1[1])}`;
+    document.getElementById('fine_tune_pos2').value = `${readable_float(csa.fine_tune_pos2[0])}, ${readable_float(csa.fine_tune_pos2[1])}`;
     for (let i = 0; i < 8; i++) {
         if (i < csa.comp_search.length) {
             document.getElementById(`comp_search${i}`).value = 
@@ -142,7 +145,12 @@ function csa_from_page_input()
         else
             break;
     }
-    
+    // Fine Tune by Pyrojewel
+    xy_str = document.getElementById('fine_tune_pos1').value;
+    csa.fine_tune_pos1 = [Number(xy_str.split(',')[0]), Number(xy_str.split(',')[1])];
+     xy_str = document.getElementById('fine_tune_pos2').value;
+    csa.fine_tune_pos2 = [Number(xy_str.split(',')[0]), Number(xy_str.split(',')[1])];
+
     csa.cam_dz = Number(document.getElementById('comp_cam_dz').value);
     csa.comp_base_z = Number(document.getElementById('comp_base_z').value);
     csa.pcb_base_z = Number(document.getElementById('pcb_base_z').value);

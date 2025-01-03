@@ -308,30 +308,81 @@ function pos_from_page() {
     return pos;
 }
 
-function csv_to_pos(csv)
-{
+// function csv_to_pos(csv)
+// {
+//     let csv_list = csv_parser(csv);
+//     let ref_cnt = {};
+//     let pos = {};
+//     for (let row of csv_list) {
+//         console.log(row)
+//         if (!isFinite(row[5]) || row[0] === undefined)
+//             continue;
+//         // avoid same reference name
+//         let ref = row[0];
+//         if (ref in ref_cnt) {
+//             ref_cnt[ref] += 1;
+//             ref += `_${ref_cnt[row[0]]}`;
+//         } else {
+//             ref_cnt[ref] = 0;
+//         }
+        
+//         let row_ = [ref, Number(row[3].replace('mm', '')), -Number(row[4].replace('mm', '')), Number(row[5])];
+//         if (row[6].toLowerCase().startsWith('b')) // bottom layer
+//             row_[3] = 180 - row_[3];
+//         if (row_[3] > 180.0)
+//             row_[3] = -(360 - row_[3]);
+        
+//         if (row[2] in pos) {
+//             if (row[1] in pos[row[2]])
+//                 pos[row[2]][row[1]].push(row_);
+//             else
+//                 pos[row[2]][row[1]] = [row_];
+//         } else {
+//             pos[row[2]] = {};
+//             pos[row[2]][row[1]] = [row_];
+//         }
+//     }
+//     return pos;
+// }
+
+function csv_to_pos(csv) {
     let csv_list = csv_parser(csv);
     let ref_cnt = {};
     let pos = {};
+
+    // 获取偏移量
+    let fineTune1 = document.getElementById('fine_tune_pos1').value.split(',').map(Number);
+    let fineTune2 = document.getElementById('fine_tune_pos2').value.split(',').map(Number);
+    let offsetX = fineTune1[0] - fineTune2[0]; 
+    let offsetY = fineTune1[1] - fineTune2[1]; 
+
     for (let row of csv_list) {
-        console.log(row)
+        console.log(row);
         if (!isFinite(row[5]) || row[0] === undefined)
             continue;
-        // avoid same reference name
+
         let ref = row[0];
         if (ref in ref_cnt) {
             ref_cnt[ref] += 1;
-            ref += `_${ref_cnt[row[0]]}`;
+            ref += `_${ref_cnt[ref]}`;
         } else {
             ref_cnt[ref] = 0;
         }
-        
-        let row_ = [ref, Number(row[3].replace('mm', '')), -Number(row[4].replace('mm', '')), Number(row[5])];
-        if (row[6].toLowerCase().startsWith('b')) // bottom layer
-            row_[3] = 180 - row_[3];
+
+        // 包含偏移量
+        let row_ = [
+            ref,
+            Number(row[3].replace('mm', '')) + offsetX, 
+            -Number(row[4].replace('mm', '')) + offsetY,  
+            Number(row[5])
+        ];
+
+        if (row[6].toLowerCase().startsWith('b')) 
+            row_[3] = 180 - row_[3]; 
+
         if (row_[3] > 180.0)
             row_[3] = -(360 - row_[3]);
-        
+
         if (row[2] in pos) {
             if (row[1] in pos[row[2]])
                 pos[row[2]][row[1]].push(row_);
